@@ -1,14 +1,34 @@
 require 'httparty'
+require 'pry'
 
+module Wonders
 #Starter Code:
+
+  def self.search_wonder(query_array)
+    query_array.each do |query|
+      encoded_uri = URI.encode("https://maps.googleapis.com/maps/api/place/textsearch/json?key=AIzaSyCPQUkUeS8YNUxAcY7Kclfhp3xwpnXtB2g&query=" + query)
+
+
+      response = HTTParty.get(encoded_uri).parsed_response
+
+      results = response["results"]
+
+
+      results.each do |result|
+        puts result["name"]
+        puts result["geometry"]["location"]
+      end
+
+    end
+    return nil
+  end
+end
+
+
+
 seven_wonders = ["Great Pyramid of Giza", "Hanging Gardens of Babylon", "Colossus of Rhodes", "Pharos of Alexandria", "Statue of Zeus at Olympia", "Temple of Artemis", "Mausoleum at Halicarnassus"]
 
-
-
-
-
-
-
+puts Wonders.search_wonder(seven_wonders)
 
 
 #Example Output:
